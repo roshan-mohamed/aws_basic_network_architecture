@@ -13,6 +13,14 @@ resource "aws_instance" "public" {
    ]
 }
 
+resource "aws_instance" "private" {
+  ami             = "ami-0947d2ba12ee1ff75"
+  instance_type   = "t2.micro"
+  subnet_id       = aws_subnet.private.id
+  security_groups = [
+       "${aws_security_group.allow_ssh_priv.id}"
+   ]
+}
 resource "aws_eip" "lb" {
   instance = aws_instance.public.id
   vpc      = true
